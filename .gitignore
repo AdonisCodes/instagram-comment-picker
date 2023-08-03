@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Configs for Secrets for easier testing
+./src/config/config.js
