@@ -1,18 +1,21 @@
 import { Flex, Heading } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import Search from './components/Search'
 import HomePage from './pages/Home'
 import PostSelection from './pages/PostSelection'
 import ConfirmPostSelection from './pages/ConfirmPostSelection/ConfirmPostSelection'
 import ConfigureGiveawaySelection from './pages/ConfigureGiveawaySelection'
 import DisplayWinner from './pages/DisplayWinner'
-import FaceBookLogin from './components/FaceBookLogin'
+import Header from './components/Layout/Header'
+import Footer from './components/Layout/Footer'
+
 
 function App() {
-  const [page, setPage] = useState('home')
+  const [page, setPage] = useState('configure-giveaway-selection')
 
   return (
-    <Flex flexDir='column' p='2vh'>
+    <Flex flexDir={'column'} h='100vh' overflowX={'hidden'} >
+    <Header setPage={setPage}/>
+    <Flex flexDir='column' mt='99px'>
       {/* home -> is the homepage of the application, this contains the funcitonality to search for a user and confirm */}
       {page === 'home' && <HomePage setPage={setPage} />}
 
@@ -27,6 +30,8 @@ function App() {
 
       {/* Display random winner, show confetti, and recorded -> saved */}
       {page === 'display-winner' && <DisplayWinner />}
+    </Flex>
+    <Footer />
     </Flex>
   )
 }
