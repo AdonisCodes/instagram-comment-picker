@@ -10,7 +10,7 @@ import Footer from './components/Layout/Footer'
 
 
 function App() {
-  const [page, setPage] = useState('configure-giveaway-selection')
+  const [page, setPage] = useState('home')
 
   return (
     <Flex flexDir={'column'} h='100vh' overflowX={'hidden'} >
