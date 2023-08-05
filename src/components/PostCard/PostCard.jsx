@@ -1,9 +1,9 @@
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { Card, CardBody, Stack, Heading, Text, Divider, ButtonGroup, Image, CardFooter, Button, IconButton, Flex } from "@chakra-ui/react"
+import { ChatIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { Card, CardBody, Stack, Heading, Text, Divider, ButtonGroup, Image, CardFooter, Button, IconButton, Flex, Box } from "@chakra-ui/react"
 import axios from "axios"
 import { useState, useEffect } from "react";
 import { confirmPost } from "../../pages/PostSelection/functions/Queries";
-
+import loadingGif from '../../assets/loading.gif'
 
 export default function PostCard({ post, package: { setPage } }) {
     const [profilePic, setProfilePic] = useState('');
@@ -43,26 +43,21 @@ export default function PostCard({ post, package: { setPage } }) {
     }, []);
 
     return (
-        <Card size='sm' w='150px' h='275px'>
-            <CardBody >
+        <Card size='sm' h='' bg='transparent' onClick={() => confirmPost(post?.shortcode, setPage)} cursor='pointer'>
+            <CardBody border='none'>
                 <Image
                     src={profilePic}
                     alt={post.edge_media_to_caption?.edges[0].node.text}
                     borderRadius='lg'
-                    w='100%'
+                    w='130px'
                     h='130px'
                     objectFit='cover'
+                    fallbackSrc={loadingGif}
                 />
-                <Stack mt='1.5'>
-                    <Text fontSize='15px'>{post.edge_media_to_caption?.edges[0].node.text.slice(0, 20) + '...'}</Text>
-                </Stack>
+                <Box borderRadius="3xl" bg='gray.800' w='70px' pos='absolute' bottom='-6px' right='40px' color='white' textAlign='center' p='1' cursor='pointer'>
+                    {post?.edge_media_to_comment.count} <ChatIcon />
+                </Box>
             </CardBody>
-            <Divider />
-            <CardFooter>
-                <Flex align={'center'} justify={'center'} w='100%' gap='3'>
-                    <IconButton icon={<CheckIcon />} bg='green.400' w='100%' onClick={() => confirmPost(post.shortcode, setPage)} />
-                </Flex>
-            </CardFooter>
         </Card>
     )
 }

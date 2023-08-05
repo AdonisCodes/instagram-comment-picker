@@ -41,15 +41,15 @@ export default function CommentCard({ user }) {
   }, []);
 
   return (
-    <Card maxW='md'>
+    <Card w='100%'>
       <CardHeader>
         <Flex spacing='4'>
-          <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+          <Flex flex='1' gap='4' alignItems='center' overflowX={'hidden'}>
             <Avatar name={user.ownerUsername} src={profilePic} />
 
             <Box>
               <Heading size='sm'>{user.ownerUsername}</Heading>
-              <Text>{user.text.slice(0, 30)}</Text>
+              <Text>{user.text.slice(0, 40)}</Text>
             </Box>
           </Flex>
         </Flex>
