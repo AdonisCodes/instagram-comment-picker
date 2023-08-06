@@ -1,10 +1,9 @@
 import { Flex, Image, Heading, useBreakpointValue } from "@chakra-ui/react";
 import logo from '../../assets/vite.png'
-import { HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import HamburgerMenu from "../HamburgerMenu";
 
-export default function Header({ setPage }) {
+export default function Header({ setPage, page, user}) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const handleMenuAction = () => {
@@ -19,13 +18,7 @@ export default function Header({ setPage }) {
             <Image h='75px' src={logo} onClick={() => setPage('home')}></Image>
             <Heading onClick={() => setPage('home')} fontSize={headingSize}>IG Giveaway App</Heading>
             <Flex ml='auto' mr='10px' cursor={'pointer'}>
-                <motion.div
-                    initial={{ rotate: 0 }}
-                    animate={{ rotate: isMenuOpen ? 90 : 0 }}
-                    transition={{ duration: 0.3 }}
-                >
-                    <HamburgerIcon fontSize='45px' onClick={() => handleMenuAction()} />
-                </motion.div>
+                {page != 'login' && <HamburgerMenu user={user} /> }
             </Flex>
         </Flex>
     )
