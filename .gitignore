@@ -25,5 +25,4 @@ dist-ssr
 *.sw?
 
 # Configs for Secrets for easier testing
-frontend/src/config
-backend/.env
+
