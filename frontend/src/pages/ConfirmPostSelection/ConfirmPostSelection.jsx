@@ -7,7 +7,7 @@ import { fetchPostData } from "./functions/Queries";
 import { colors } from "../../config/config";
 import loading from '../../assets/loading.gif'
 
-export default function ConfirmPostSelection({ setPage }) {
+export default function ConfirmPostSelection({ setPage, setCredits }) {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState({})
   const [profilePic, setProfilePic] = useState();
@@ -41,7 +41,7 @@ export default function ConfirmPostSelection({ setPage }) {
     }
   };
 
-  Fetch the post data using the shortcode stored in localStorage
+  // Fetch the post data using the shortcode stored in localStorage
   useEffect(() => {
     fetchPostData(localStorage.getItem('shortCode'), setPost, setIsLoading);
   }, []);
@@ -68,8 +68,8 @@ export default function ConfirmPostSelection({ setPage }) {
 
         </Flex>
         <Flex align={'center'} justify={'center'} w='100%' gap='3' pos='absolute' bottom='-20px'>
-          <IconButton icon={<CheckIcon />} bg='green.400' h='50px' w='50px' onClick={() => { confirmFinal('0', setPage,) }} />
-          <IconButton icon={<CloseIcon />} bg='red.400' h='50px' w='50px' onClick={() => { confirmFinal('1', setPage) }} />
+          <IconButton icon={<CheckIcon />} bg='green.400' h='50px' w='50px' onClick={() => { confirmFinal('0', setPage, setCredits) }} />
+          <IconButton icon={<CloseIcon />} bg='red.400' h='50px' w='50px' onClick={() => { confirmFinal('1', setPage, setCredits) }} />
         </Flex>
       </Card>}
     </Flex>

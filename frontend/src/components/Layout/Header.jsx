@@ -3,7 +3,7 @@ import logo from '../../assets/vite.png'
 import { useState } from "react";
 import HamburgerMenu from "../HamburgerMenu";
 
-export default function Header({ setPage, page, user}) {
+export default function Header({ setPage, page, user, credits}) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const handleMenuAction = () => {
@@ -18,7 +18,7 @@ export default function Header({ setPage, page, user}) {
             <Image h='75px' src={logo} onClick={() => setPage('home')}></Image>
             <Heading onClick={() => setPage('home')} fontSize={headingSize}>IG Giveaway App</Heading>
             <Flex ml='auto' mr='10px' cursor={'pointer'}>
-                {page != 'login' && <HamburgerMenu user={user} /> }
+                {page != 'login' && <HamburgerMenu user={user} setPage={setPage} /> }
             </Flex>
         </Flex>
     )
