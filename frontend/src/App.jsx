@@ -9,12 +9,12 @@ import Header from './components/Layout/Header'
 import Footer from './components/Layout/Footer'
 import Login from './components/Login'
 import PaymentPage from './pages/PaymentPage/PaymentPage'
-import PastGiveaways from './pages/PastGIveaways'
+import PastGiveaways from './pages/PastGiveaways'
 
 function App() {
   const [page, setPage] = useState('login')
   const [user, setUser] = useState(null)
-  // TODO: Make the state managed better, so that we don't need a refresh to update the credits
+  // TODO: Make the state managed better, so that we don't need a refresh to update the credit
   const [credits, setCredits] = useState(Number(localStorage.getItem('credits')) || 0)
   const [giveawayRedirect, setGiveawayRedirect] = useState(false)
   return (
