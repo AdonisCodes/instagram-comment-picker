@@ -9,7 +9,7 @@ import Header from './components/Layout/Header'
 import Footer from './components/Layout/Footer'
 import Login from './components/Login'
 import PaymentPage from './pages/PaymentPage/PaymentPage'
-import PastGiveaways from './pages/PastGIveaways'
+import PastGiveaways from './pages/PastGiveaways'
 
 function App() {
   const [page, setPage] = useState('login')
