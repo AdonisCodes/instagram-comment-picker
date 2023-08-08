@@ -21,8 +21,11 @@ function StripeComponent() {
     fetch(BACKEND_URL + "payments/create-payment-intent", {
       method: "POST",
       body: JSON.stringify({
-        userID: localStorage.getItem('userID'),
+        userID: localStorage.getItem('login'),
       }),
+      headers: {
+        "Content-Type": "application/json",
+      }
     }).then(async (result) => {
       var { clientSecret } = await result.json();
       setClientSecret(clientSecret);

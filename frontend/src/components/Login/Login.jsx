@@ -15,7 +15,7 @@ function Login({ setPage, setUser, setCredits }) {
       setUser(localStorage.getItem('login'))
       // Pull the credits from the database using the userid
       const res = await axios.post(BACKEND_URL + 'users', {
-        userID: 'id'
+        userID: localStorage.getItem('login')
       })
       console.log(res.data)
       if (res.data.length > 0) {

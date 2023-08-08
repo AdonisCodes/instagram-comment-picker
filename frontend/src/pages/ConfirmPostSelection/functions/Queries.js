@@ -28,32 +28,32 @@ export const fetchPostData = async (postId, setPost, setIsLoading) => {
   setIsLoading(false);
 };
 
+export const confirmFinal = async (validity, setPage) => {
+  if (validity == "0") {
+    // Subract a credit
+    try {
+      let response = await axios.post(BACKEND_URL + "users/subract", {
+        userID: localStorage.getItem("login"),
+        headers: { "Content-Type": "application/json" },
+      });
 
-export const confirmFinal = async (validity, setPage, setCredits) => {
-    if (validity == '0') {
-        // Subract a credit
-        try {
-          
-          let response = axios.post(BACKEND_URL + '/users/subract', {
-            data: {
-              userID: localStorage.getItem('userID'),
-            },
-            headers: {'Content-Type': 'application/json'},
-          })
-
-          if ((await response).status == 429) {
-            console.log('failed to subract credit')
-            setPage('payment')
-          } else {
-            localStorage.setItem('credits', (await response).data[0].credits)
-            setCredits((await response).data[0].credits)
-            setPage('configure-giveaway-selection')
-          }
-        } catch (e) {
-          console.log(e)
-          setPage('payment')
-        }
+      if (response.status == 429) {
+        console.log("failed to subract credit");
+        setPage("payment");
+      } else {
+        console.log('got credits working')
+        localStorage.setItem("credits", response.data[0].credits);
+        setPage("configure-giveaway-selection");
+        return
+      }
+    } catch (e) {
+      console.log('some error')
+      console.log(e);
+      setPage("payment");
+      return
     }
+  }
+  console.log('stupid logic')
+  setPage("home");
+};
 
-    setPage('home')
-}
