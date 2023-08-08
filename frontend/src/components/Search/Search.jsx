@@ -1,14 +1,27 @@
 import { Flex, Icon, Input, Button, Text, Img, useBreakpointValue, Spinner } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from '../../assets/vite.png';
 
 export default function Search({ setPage, searchOnClick, isLoading, package: { setIsLoading, setUser } }) {
   const [input, setInput] = useState('');
   const [isFocused, setIsFocused] = useState(false);
+  const [valid, setValid] = useState(false);
+
+  useEffect(() => {
+    const segments = input.split('/');
+    for (const segment of segments) {
+      if (segment === 'p' || segment === 'reel' || segment === 'stories') {
+        setValid(true);
+      }
+    }
+
+    if (input[0] === '@') {
+      setValid(true);
+    }
+
+  }, [input])
   // Regular expression to match Instagram URL pattern
-  const instagramUrlPattern = /^(?:https?:\/\/)?(?:www\.)?instagram\.com\/p\/\w+\/?$/i;
-  const valid = input.startsWith('@') || instagramUrlPattern.test(input);
   const generalSizingMobile = useBreakpointValue({ base: '80vw', sm: '80vw', md: '300px' })
   const handleFocus = () => {
     setIsFocused(true);
@@ -27,7 +40,7 @@ export default function Search({ setPage, searchOnClick, isLoading, package: { s
         bg='white'
         p='2'
         borderRadius='lg'
-        border={isFocused && valid ? '3px solid green' : isFocused && !valid ?  '3px solid orange' : 'none'}
+        border={isFocused && valid ? '3px solid green' : isFocused && !valid ? '3px solid orange' : 'none'}
         style={{
           transition: 'border-color 0.3s', // Add a transition for a smooth effect
         }}
@@ -35,7 +48,9 @@ export default function Search({ setPage, searchOnClick, isLoading, package: { s
         <Img src={logo} w='30px' />
         <Input
           placeholder='Enter @username or Post Link'
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => {
+            setInput(e.target.value)
+          }}
           onFocus={handleFocus}
           onBlur={handleBlur}
           focusBorderColor="transparent"
@@ -49,6 +64,14 @@ export default function Search({ setPage, searchOnClick, isLoading, package: { s
       <Button
         onClick={() => {
           if (valid) {
+            const segments = input.split('/');
+            for (const segment of segments) {
+              if (segment === 'p' || segment === 'reel' || segment === 'stories') {
+                searchOnClick(segment, setIsLoading, setUser, setPage);
+              }
+            }
+          }
+          if (input[0] === '@') {
             searchOnClick(input, setIsLoading, setUser, setPage);
           }
         }}
@@ -61,9 +84,9 @@ export default function Search({ setPage, searchOnClick, isLoading, package: { s
         _hover={{ color: "black", background: "white" }}
       >
         {isLoading ? <Spinner /> : <>
-        Search
-        <span style={{ width: '15px' }}></span>
-        <ArrowForwardIcon />
+          Search
+          <span style={{ width: '15px' }}></span>
+          <ArrowForwardIcon />
         </>}
       </Button>
       <Text pt='5vh' textAlign={'center'}>

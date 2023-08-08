@@ -54,12 +54,14 @@ router.post("/subract", async (req, res) => {
     // Get the credits
     const { data, error } = await supabase
       .from("users")
-      .select("credits")
+      .select("*")
       .eq("id", req.body.userID);
     // If credits less than 1, return error 429
-
+    console.log(data)
+    console.log(req.body)
     if (data[0].credits < 1) {
-      res.sendStatus(429);
+      console.log("ERROR, TO LITTLE CREDITS")
+      res.sendStatus(429)
       return;
     }
     // Else subract
@@ -75,4 +77,45 @@ router.post("/subract", async (req, res) => {
     return;
   }
 });
+
+router.post("/giveaway_save", async (req, res) => {
+  console.log(req.body.userID)
+  if (req.body.userID && req.body.giveaway) {
+    try {
+      const giveawayData = JSON.stringify(req.body.giveaway);
+      const userID = Number(req.body.userID)
+
+      const { data, error } = await supabase
+        .from("giveaways")
+        .insert({ user: userID, giveaway: giveawayData })
+        .select();
+      
+      if (error) {
+        console.error("Error inserting giveaway data:", error);
+        res.status(500).send("Error inserting giveaway data");
+        return;
+      }
+      
+      console.log("Giveaway data inserted:", data);
+      res.send(data);
+    } catch (e) {
+      console.error("Error parsing or inserting giveaway data:", e.message);
+      res.status(500).send("Error parsing or inserting giveaway data");
+    }
+  } else {
+    res.status(400).send("Missing userID or giveaway data");
+  }
+});
+
+router.post("/giveaways", async (req, res) => {
+  // Query the giveaways Database
+  const { data, error } = await supabase.from('giveaways').select('*').eq('user', req.body.userID);
+  // If error, return error
+  if (error) {
+    res.status(500).send("Error getting giveaway data");
+    return
+  }  
+  // Return all the past giveaways
+  res.send(data);
+})
 export default router;

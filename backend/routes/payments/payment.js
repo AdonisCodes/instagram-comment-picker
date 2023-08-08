@@ -1,8 +1,6 @@
 import express from "express";
-import { resolve } from "path";
 import { config as dotenvConfig } from "dotenv";
 import stripeModule from "stripe";
-import bodyParser from "body-parser";
 import { createClient } from "@supabase/supabase-js";
 
 dotenvConfig({ path: "./.env" });
@@ -10,7 +8,6 @@ dotenvConfig({ path: "./.env" });
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON;
 const supabase = createClient(supabaseUrl, supabaseKey);
-
 
 const router = express.Router();
 const stripe = stripeModule(process.env.STRIPE_SECRET_KEY, {
@@ -23,28 +20,30 @@ router.post("/create-payment-intent", async (req, res) => {
       currency: "USD",
       amount: 5 * 100,
     });
+    const {data, error} = await supabase.from('users').select("*").eq("id", req.body.userID);
+
+    console.log(req.body, data)
+
+    const { data2, error2 } = await supabase  
+      .from("users")
+      .update({ credits: await data[0].credits + 50 }) // Update credits to be current credits + 50
+      .eq("id", req.body.userID)
+      .select();
+
+    console.log(
+      "Payment successful with an amount of 5 USD. User credits updated:",
+      await data2
+    );
 
     // Send publishable key and PaymentIntent details to client
     res.send({
       clientSecret: paymentIntent.client_secret,
     });
 
-    const { data, error } = await supabase
-      .from("users")
-      .update({ credits: "50" })
-      .eq("id", req.body.userID)
-      .select()
-
-    console.log(
-      "payment successful with amount of 5 usd with a response of",
-      paymentIntent
-    );
+    return;
   } catch (e) {
-    return res.status(400).send({
-      error: {
-        message: e.message,
-      },
-    });
+    console.log(e);
+    return res.sendStatus(400);
   }
 });
 
