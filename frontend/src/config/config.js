@@ -5,7 +5,7 @@ export const APIFY_WORKER_URL = ''
 export const META_API_KEY = ""
 export const META_APP_ID = "246860718248950"
 
-export const BACKEND_URL = "http://localhost:5252/"
+export const BACKEND_URL = "https://ig-ren-giv-picker.onrender.com/"
 export const colors = {
     primary: '#F02B51',
     textPrimary: "white",

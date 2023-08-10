@@ -22,7 +22,8 @@ export const useCommentConfig = (
   keywords,
   commentsBetweenDates,
   manualExclude,
-  setPage
+  setPage,
+  user
 ) => {
   let newArray = [...inputArray];
 
@@ -93,5 +94,5 @@ export const useCommentConfig = (
   localStorage.setItem('all', JSON.stringify(inputArray));
   localStorage.setItem('winners', JSON.stringify(randomWinners));
   console.log('winners', randomWinners);
-  setPage('display-winner');
+  setPage(!(user === null || user === undefined) ? 'display-winner' : 'login');
 };

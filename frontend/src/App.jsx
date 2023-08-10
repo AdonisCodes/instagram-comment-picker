@@ -12,11 +12,12 @@ import PaymentPage from './pages/PaymentPage/PaymentPage'
 import PastGiveaways from './pages/PastGiveaways'
 
 function App() {
-  const [page, setPage] = useState('login')
-  const [user, setUser] = useState(null)
+  const [page, setPage] = useState('home')
+  const [user, setUser] = useState(localStorage.getItem('login'))
   // TODO: Make the state managed better, so that we don't need a refresh to update the credit
   const [credits, setCredits] = useState(Number(localStorage.getItem('credits')) || 0)
   const [giveawayRedirect, setGiveawayRedirect] = useState(false)
+  
   return (
     <Flex flexDir={'column'} h='100vh' overflowX={'hidden'} >
         <Header setPage={setPage} page={page} user={user} />
@@ -41,7 +42,7 @@ function App() {
           {page === 'confirm-post-selection' && <ConfirmPostSelection setPage={setPage} setCredits={setCredits}/>}
 
           {/* Configure Giveaway Settings */}
-          {page === 'configure-giveaway-selection' && <ConfigureGiveawaySelection setPage={setPage} setGiveawayRedirect={setGiveawayRedirect} />}
+          {page === 'configure-giveaway-selection' && <ConfigureGiveawaySelection setPage={setPage} setGiveawayRedirect={setGiveawayRedirect} user={user}/>}
 
           {/* Display random winner, show confetti, and recorded -> saved */}
           {page === 'display-winner' && <DisplayWinner giveawayRedirect={giveawayRedirect}/>}

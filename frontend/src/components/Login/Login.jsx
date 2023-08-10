@@ -21,7 +21,7 @@ function Login({ setPage, setUser, setCredits }) {
       if (res.data.length > 0) {
         localStorage.setItem('credits', res.data[0].credits)
         setCredits(localStorage.getItem('credits'))
-        setPage('home')
+        setPage('display-winner')
 
       }
     }

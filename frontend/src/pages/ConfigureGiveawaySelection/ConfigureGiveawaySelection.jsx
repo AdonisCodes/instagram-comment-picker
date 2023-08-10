@@ -7,7 +7,7 @@ import { RangeDatepicker } from "chakra-dayzed-datepicker";
 import { CheckIcon } from "@chakra-ui/icons";
 import { colors } from "../../config/config";
 
-export default function ConfigureGiveawaySelection({ setPage, setGiveawayRedirect }) {
+export default function ConfigureGiveawaySelection({ setPage, setGiveawayRedirect, user }) {
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([])
 
@@ -101,7 +101,7 @@ export default function ConfigureGiveawaySelection({ setPage, setGiveawayRedirec
 
           <Button bg='green.400' p='3' onClick={() => {
             if (!isLoading) {
-              useCommentConfig(comments, Number(winners), removeDuplicates, filterHashtags, mentioned, keywords, selectedDates, manualExclude, setPage)
+              useCommentConfig(comments, Number(winners), removeDuplicates, filterHashtags, mentioned, keywords, selectedDates, manualExclude, setPage, user)
               setGiveawayRedirect(false)
             }
 
