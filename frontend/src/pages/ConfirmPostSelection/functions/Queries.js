@@ -17,7 +17,7 @@ export const fetchPostData = async (postId, setPost, setIsLoading) => {
     },
   };
   console.log(postId)
-  localStorage.setItem("shortCode", 'asljdkff');
+  localStorage.setItem("shortCode", postId);
   try {
     const response = await axios.request(options);
     console.log(response.data);
@@ -32,6 +32,11 @@ export const fetchPostData = async (postId, setPost, setIsLoading) => {
 export const confirmFinal = async (validity, setPage) => {
   if (validity == "0") {
     // Subract a credit
+    if (!localStorage.getItem("login")) {
+      setPage("login");
+      return
+    }
+    
     try {
       let response = await axios.post(BACKEND_URL + "users/subract", {
         userID: localStorage.getItem("login"),
