@@ -16,7 +16,8 @@ export const fetchPostData = async (postId, setPost, setIsLoading) => {
       "X-RapidAPI-Host": "instagram-scraper-2022.p.rapidapi.com",
     },
   };
-
+  console.log(postId)
+  localStorage.setItem("shortCode", 'asljdkff');
   try {
     const response = await axios.request(options);
     console.log(response.data);

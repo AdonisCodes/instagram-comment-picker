@@ -3,6 +3,7 @@ import { RAPIDAPI_KEY } from "../../../config/config";
 
 export const searchOnClick = async (input, setIsLoading, setUser, setPage) => {
     setIsLoading(true)
+    console.log(input)
     if (input.startsWith('@')) {
       const username = input.substring(1)
       const options = {
@@ -32,7 +33,7 @@ export const searchOnClick = async (input, setIsLoading, setUser, setPage) => {
         setUser(false)
       }
     } else {
-      console.log('false')
+      console.log('Post')
       const shortCode = input.slice(-1) == '/' ? input.slice(0, -1).slice(-11) : input.slice(-11)
       localStorage.setItem('shortCode', shortCode)
       setPage('confirm-post-selection')    
