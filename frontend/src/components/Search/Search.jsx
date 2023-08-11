@@ -13,6 +13,7 @@ export default function Search({ setPage, searchOnClick, isLoading, package: { s
     for (const segment of segments) {
       if (segment === 'p' || segment === 'reel' || segment === 'stories') {
         setValid(true);
+
       }
     }
 
@@ -65,12 +66,15 @@ export default function Search({ setPage, searchOnClick, isLoading, package: { s
         onClick={() => {
           if (valid) {
             const segments = input.split('/');
-            for (const segment of segments) {
+            for (let i = 0; i < segments.length; i++) {
+              const segment = segments[i];
               if (segment === 'p' || segment === 'reel' || segment === 'stories') {
-                searchOnClick(segment, setIsLoading, setUser, setPage);
+                searchOnClick(segments[i + 1], setIsLoading, setUser, setPage);
+                return
               }
             }
           }
+          
           if (input[0] === '@') {
             searchOnClick(input, setIsLoading, setUser, setPage);
           }
